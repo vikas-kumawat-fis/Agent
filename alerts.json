@@ -1,0 +1,205 @@
+{
+  "metadata": {
+    "schema_version": "1.0.0",
+    "generator": "Agentic SOC POC",
+    "generated_at_utc": "2025-12-04T09:08:16.297816+00:00",
+    "source_file": "Microsoft_Security_Events_Authentication_IngestedLogs.csv",
+    "rules": [
+      {
+        "rule_id": "RULE-T1110-PASSWORD-SPRAY",
+        "name": "Password spraying from single IP",
+        "severity": "High",
+        "logic": {
+          "event_id": 4625,
+          "group_by": [
+            "computer",
+            "source_ip"
+          ],
+          "window_minutes": 20,
+          "thresholds": {
+            "min_events": 25,
+            "min_distinct_accounts": 20
+          }
+        },
+        "mitre": {
+          "tactics": [
+            "Credential Access"
+          ],
+          "techniques": [
+            "T1110"
+          ]
+        }
+      },
+      {
+        "rule_id": "RULE-T1110-CORRELATED-SUCCESS",
+        "name": "Success after burst of failures",
+        "severity": "Medium",
+        "logic": {
+          "success_event_id": 4624,
+          "fail_event_id": 4625,
+          "proximity_minutes": 10,
+          "thresholds": {
+            "min_prior_failures": 15
+          }
+        },
+        "mitre": {
+          "tactics": [
+            "Credential Access"
+          ],
+          "techniques": [
+            "T1110"
+          ]
+        }
+      },
+      {
+        "rule_id": "RULE-WIN-4624-SERVICE",
+        "name": "Service logon observed",
+        "severity": "Informational",
+        "logic": {
+          "success_event_id": 4624,
+          "where_logon_type_name_contains": "Service"
+        },
+        "mitre": {
+          "tactics": [
+            "Execution"
+          ],
+          "techniques": []
+        }
+      }
+    ]
+  },
+  "alerts": [
+    {
+      "alert_id": "ALERT-PASSWORD-SPRAY-devops-vm-194.169.175.17-1729182040",
+      "rule_id": "RULE-T1110-PASSWORD-SPRAY",
+      "title": "Password spraying from single source IP across many accounts",
+      "description": "Detected 135 failed logons against host devops-vm from 194.169.175.17 between 2024-10-17T16:20:40.274000 and 2024-10-17T16:31:59.557000 with 135 distinct accounts.",
+      "severity": "High",
+      "category": "Authentication",
+      "tactics": [
+        "Credential Access"
+      ],
+      "techniques": [
+        "T1110"
+      ],
+      "time_window_minutes": 20,
+      "thresholds": {
+        "min_events": 25,
+        "min_distinct_accounts": 20
+      },
+      "entities": {
+        "host": "devops-vm",
+        "source_ip": "194.169.175.17"
+      },
+      "evidence_sample": [
+        {
+          "time_utc": "2024-10-17T16:20:40.274000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "elearningline",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:41.928000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "edgix",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:43.739000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "eclub",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:45.916000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "efnc",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:47.562000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "ecnp",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:49.300000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "ecree",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:50.963000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "earin",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:52.610000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "eaglesblood",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:54.268000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "ecsc",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        },
+        {
+          "time_utc": "2024-10-17T16:20:55.922000",
+          "event_id": 4625,
+          "computer": "devops-vm",
+          "source_ip": "194.169.175.17",
+          "account": "ebaaf",
+          "activity": "4625 - An account failed to log on.",
+          "logon_type_name": "3 - Network"
+        }
+      ],
+      "evidence_stats": {
+        "total_events": 135,
+        "distinct_accounts": 135
+      },
+      "confidence": 0.9,
+      "recommended_actions": [
+        "Temporarily block source IP at network edge.",
+        "Enable/verify account lockout policies.",
+        "Review targeted accounts for compromise.",
+        "Consider MFA enforcement for exposed services."
+      ],
+      "tags": [
+        "brute-force",
+        "password-spray",
+        "windows-security-event",
+        "eventid-4625"
+      ]
+    }
+  ]
+}
