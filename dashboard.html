@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic SOC - AI-Powered Alert Triage Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1>🛡️ Agentic SOC</h1>
+                    <p class="subtitle">AI-Powered Level 1 SOC Automation</p>
+                </div>
+                <div class="header-actions">
+                    <label class="btn btn-primary" for="uploadInput">📁 Upload Alerts</label>
+                    <input id="uploadInput" type="file" accept="application/json" multiple style="display:none" />
+                    <button id="clearBtn" class="btn btn-danger">Clear All</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Metrics Dashboard -->
+        <section class="metrics-section">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">📊</div>
+                    <div class="metric-content">
+                        <div class="metric-label">Total Processed</div>
+                        <div class="metric-value" id="totalProcessed">0</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">⚡</div>
+                    <div class="metric-content">
+                        <div class="metric-label">In Progress</div>
+                        <div class="metric-value" id="inProgress">0</div>
+                    </div>
+                </div>
+                <div class="metric-card success">
+                    <div class="metric-icon">✓</div>
+                    <div class="metric-content">
+                        <div class="metric-label">True Positives</div>
+                        <div class="metric-value" id="truePositives">0</div>
+                    </div>
+                </div>
+                <div class="metric-card warning">
+                    <div class="metric-icon">⚠</div>
+                    <div class="metric-content">
+                        <div class="metric-label">False Positives</div>
+                        <div class="metric-value" id="falsePositives">0</div>
+                    </div>
+                </div>
+                <div class="metric-card info">
+                    <div class="metric-icon">ℹ</div>
+                    <div class="metric-content">
+                        <div class="metric-label">Benign</div>
+                        <div class="metric-value" id="benign">0</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">⏱️</div>
+                    <div class="metric-content">
+                        <div class="metric-label">Avg MTTR</div>
+                        <div class="metric-value" id="avgMTTR">0s</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content: 3 Panel Layout -->
+        <div class="main-content">
+            <!-- Left Panel: File List -->
+            <aside class="left-panel" id="leftPanel">
+                <div class="panel-header">
+                    <h3>📂 Uploaded Files</h3>
+                </div>
+                <div class="file-list" id="fileList">
+                    <div class="empty-message">
+                        <p>No files uploaded yet</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Center Panel: Alerts -->
+            <section class="center-panel">
+                <div class="panel-header">
+                    <h3>⚠️ Alerts</h3>
+                    <button id="startAnalysisBtn" class="btn btn-primary" disabled>🚀 Start Analysis</button>
+                </div>
+                <div class="alerts-container">
+                    <div class="alert-controls">
+                        <label class="select-all-label">
+                            <input type="checkbox" id="selectAllAlerts">
+                            Select All
+                        </label>
+                        <span id="selectedCount">0 selected</span>
+                    </div>
+                    <div class="alerts-list" id="alertsList">
+                        <div class="empty-message">
+                            <p>No alerts to display</p>
+                            <p class="empty-hint">Upload a file to get started</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Agent Analysis Terminal -->
+            <aside class="right-panel" id="rightPanel">
+                <div class="panel-header">
+                    <h3>🤖 Agent Analysis Terminal</h3>
+                </div>
+                <div class="terminal-container" id="terminalContainer">
+                    <div class="terminal-output" id="terminalOutput">
+                        <div class="terminal-line system">
+                            <span class="timestamp">[System]</span>
+                            <span class="message">Agent terminal ready. Waiting for analysis...</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Alert Detail Modal -->
+        <div id="alertModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Alert Details</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body" id="alertDetailContent">
+                    <!-- Dynamic content loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="spinner"></div>
+            <p>Processing alerts...</p>
+        </div>
+
+        <!-- Toast Notifications -->
+        <!-- <div id="toastContainer" class="toast-container"></div> -->
+    </div>
+
+    <script src="/static/dashboard.js"></script>
+</body>
+</html>
